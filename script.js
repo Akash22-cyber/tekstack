@@ -3,7 +3,7 @@ function weatherAPI(city) {
 
     return new Promise((resolve, reject) => {
 
-        // Check for missing city name
+        // Handle missing city name
         if (!city || city.trim() === "") {
             reject(new Error("City name is missing"));
             return;
@@ -19,9 +19,16 @@ function weatherAPI(city) {
             "Tokyo": 25
         };
 
-        // Check if city exists
-        if (weatherData[city]) {
-            resolve(weatherData[city]);
+        // Remove extra spaces and make input case-insensitive
+        const inputCity = city.trim();
+
+        const matchedCity = Object.keys(weatherData).find(
+            key => key.toLowerCase() === inputCity.toLowerCase()
+        );
+
+        // Check whether city exists
+        if (matchedCity) {
+            resolve(weatherData[matchedCity]);
         } else {
             reject(new Error("City not found"));
         }
@@ -29,17 +36,16 @@ function weatherAPI(city) {
 }
 
 
-// Asynchronous function using async/await
+// Async function using async/await
 async function getWeather(city) {
 
     try {
 
-        // Call API using await
         const temperature = await weatherAPI(city);
 
-        console.log(`Temperature in ${city} is ${temperature}°C`);
+        console.log(`Temperature in ${city.trim()} is ${temperature}°C`);
 
-        return `Temperature in ${city} is ${temperature}°C`;
+        return `Temperature in ${city.trim()} is ${temperature}°C`;
 
     } catch (error) {
 
@@ -49,13 +55,12 @@ async function getWeather(city) {
 
     } finally {
 
-        // Always executed
         console.log("Weather check completed");
     }
 }
 
 
-// Function called by the HTML button
+// Function for HTML button
 async function checkWeather() {
 
     const city = document.getElementById("city").value;
@@ -63,5 +68,6 @@ async function checkWeather() {
     const result = await getWeather(city);
 
     document.getElementById("result").innerText = result;
-    document.getElementById("completed").innerText = "Weather check completed";
+    document.getElementById("completed").innerText =
+        "Weather check completed";
 }
