@@ -34,16 +34,17 @@ function displayCustomers() {
 
     let table = document.getElementById("customerTable");
 
-    // Clear existing table rows
     table.innerHTML = "";
 
-    // Display every customer
     customers.forEach(function(customer) {
 
         let row = document.createElement("tr");
 
         let nameCell = document.createElement("td");
         nameCell.innerText = customer.name;
+
+        let emailCell = document.createElement("td");
+        emailCell.innerText = customer.email;
 
         let ageCell = document.createElement("td");
         ageCell.innerText = customer.age;
@@ -55,6 +56,7 @@ function displayCustomers() {
         weightCell.innerText = customer.weight;
 
         row.appendChild(nameCell);
+        row.appendChild(emailCell);
         row.appendChild(ageCell);
         row.appendChild(heightCell);
         row.appendChild(weightCell);
@@ -62,7 +64,6 @@ function displayCustomers() {
         table.appendChild(row);
     });
 }
-
 
 function clearForm() {
 
