@@ -1,20 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Muscle Magic</title>
 
     <style>
         body {
             background-color: #fff0d9;
-            font-family: Arial;
+            font-family: Arial, sans-serif;
         }
 
         h1 {
             text-align: center;
             background-color: #baf0d1;
+            margin: 0 0 20px 0;
         }
 
-        div {
+        .form-container {
             width: 600px;
             margin: auto;
             padding: 20px;
@@ -22,14 +26,30 @@
             border: 2px solid #333;
         }
 
+        .form-container label {
+            display: inline-block;
+            width: 220px;
+            margin-bottom: 10px;
+        }
+
+        .form-container input {
+            width: 145px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            margin: 10px 30px;
+        }
+
         table {
-            width: 600px;
+            width: 640px;
             margin: 20px auto;
             background-color: #baf0d1;
             border-collapse: collapse;
         }
 
-        th, td {
+        th,
+        td {
             padding: 8px;
             text-align: left;
         }
@@ -38,44 +58,45 @@
 
 <body>
 
-       <h1>Muscle Magic</h1>
+    <h1>Muscle Magic</h1>
 
-    <div>
-        <label>Name</label>
+    <div class="form-container">
+
+        <label for="name">Name</label>
         <input type="text" id="name">
 
-        <br><br>
+        <br>
 
-        <label>Email</label>
+        <label for="email">Email</label>
         <input type="email" id="email">
 
-        <br><br>
+        <br>
 
-        <label>Age</label>
+        <label for="age">Age</label>
         <input type="number" id="age">
 
-        <br><br>
+        <br>
 
-        <label>Height (in cm)</label>
+        <label for="height">Height (in cm)</label>
         <input type="number" id="height">
 
-        <br><br>
+        <br>
 
-        <label>Weight (in kg)</label>
+        <label for="weight">Weight (in kg)</label>
         <input type="number" id="weight">
 
-        <br><br>
+        <br>
 
         <button onclick="addCustomer()">Submit</button>
         <button onclick="clearForm()">Clear</button>
-    </div>
 
-    <br>
+    </div>
 
     <table border="1">
         <thead>
             <tr>
                 <th>Name</th>
+                <th>Email</th>
                 <th>Age</th>
                 <th>Height</th>
                 <th>Weight</th>
@@ -86,11 +107,8 @@
         </tbody>
     </table>
 
-        <tbody id="customerTable">
-        </tbody>
-    </table>
-
     <script src="script.js"></script>
 
 </body>
+
 </html>
