@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Muscle Magic</title>
+
+    <style>
+        body {
+            background-color: #fff0d9;
+            font-family: Arial;
+        }
+
+        h1 {
+            text-align: center;
+            background-color: #baf0d1;
+        }
+
+        div {
+            width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: #baf0d1;
+            border: 2px solid #333;
+        }
+
+        table {
+            width: 600px;
+            margin: 20px auto;
+            background-color: #baf0d1;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+
+       <h1>Muscle Magic</h1>
+
+    <div>
+        <label>Name</label>
+        <input type="text" id="name">
+
+        <br><br>
+
+        <label>Email</label>
+        <input type="email" id="email">
+
+        <br><br>
+
+        <label>Age</label>
+        <input type="number" id="age">
+
+        <br><br>
+
+        <label>Height (in cm)</label>
+        <input type="number" id="height">
+
+        <br><br>
+
+        <label>Weight (in kg)</label>
+        <input type="number" id="weight">
+
+        <br><br>
+
+        <button onclick="addCustomer()">Submit</button>
+        <button onclick="clearForm()">Clear</button>
+    </div>
+
+    <br>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Height</th>
+                <th>Weight</th>
+            </tr>
+        </thead>
+
+        <tbody id="customerTable">
+        </tbody>
+    </table>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
