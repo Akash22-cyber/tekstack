@@ -1,27 +1,67 @@
-function validateProductCode(productCode) {
+// Mock Weather API
+function weatherAPI(city) {
 
-    // Regular expression:
-    // # followed by exactly 4 uppercase letters
-    // followed by exactly 3 digits
-    let pattern = /^#[A-Z]{4}[0-9]{3}$/;
+    return new Promise((resolve, reject) => {
 
-    // Check whether product code is valid
-    if (pattern.test(productCode)) {
-        return "Product code verified successfully";
-    } else {
-        return "Product code is not valid";
+        // Check for missing city name
+        if (!city || city.trim() === "") {
+            reject(new Error("City name is missing"));
+            return;
+        }
+
+        // Predefined weather data
+        const weatherData = {
+            "Sydney": 28,
+            "London": 15,
+            "Mumbai": 32,
+            "Delhi": 35,
+            "New York": 20,
+            "Tokyo": 25
+        };
+
+        // Check if city exists
+        if (weatherData[city]) {
+            resolve(weatherData[city]);
+        } else {
+            reject(new Error("City not found"));
+        }
+    });
+}
+
+
+// Asynchronous function using async/await
+async function getWeather(city) {
+
+    try {
+
+        // Call API using await
+        const temperature = await weatherAPI(city);
+
+        console.log(`Temperature in ${city} is ${temperature}°C`);
+
+        return `Temperature in ${city} is ${temperature}°C`;
+
+    } catch (error) {
+
+        console.log(`Failed to fetch weather: ${error.message}`);
+
+        return `Failed to fetch weather: ${error.message}`;
+
+    } finally {
+
+        // Always executed
+        console.log("Weather check completed");
     }
 }
 
 
-function checkCode() {
+// Function called by the HTML button
+async function checkWeather() {
 
-    // Get product code from input
-    let productCode = document.getElementById("productCode").value;
+    const city = document.getElementById("city").value;
 
-    // Pass product code as an argument to the validation function
-    let message = validateProductCode(productCode);
+    const result = await getWeather(city);
 
-    // Display returned message
-    document.getElementById("result").innerText = message;
+    document.getElementById("result").innerText = result;
+    document.getElementById("completed").innerText = "Weather check completed";
 }
