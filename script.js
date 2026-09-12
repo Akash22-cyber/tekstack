@@ -1,21 +1,27 @@
-function validateProductCode() {
+function validateProductCode(productCode) {
+
+    // Regular expression:
+    // # followed by exactly 4 uppercase letters
+    // followed by exactly 3 digits
+    let pattern = /^#[A-Z]{4}[0-9]{3}$/;
+
+    // Check whether product code is valid
+    if (pattern.test(productCode)) {
+        return "Product code verified successfully";
+    } else {
+        return "Product code is not valid";
+    }
+}
+
+
+function checkCode() {
 
     // Get product code from input
     let productCode = document.getElementById("productCode").value;
 
-    // Regular expression:
-    // #       -> starts with #
-    // [A-Z]{4} -> exactly 4 uppercase letters
-    // [0-9]{3} -> exactly 3 digits
-    // $       -> end of string
-    let pattern = /^#[A-Z]{4}[0-9]{3}$/;
+    // Pass product code as an argument to the validation function
+    let message = validateProductCode(productCode);
 
-    // Check product code
-    if (pattern.test(productCode)) {
-        document.getElementById("result").innerText =
-            "Product code verified successfully";
-    } else {
-        document.getElementById("result").innerText =
-            "Product code is not valid";
-    }
+    // Display returned message
+    document.getElementById("result").innerText = message;
 }
