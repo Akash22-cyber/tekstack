@@ -1,42 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Muscle Magic</title>
+    <title>Product Code Validation</title>
 </head>
 <body>
 
-    <h1>Muscle Magic - Customer Details</h1>
+    <h1>Product Code Validation</h1>
 
-    <label>Name:</label>
-    <input type="text" id="name">
+    <label for="productCode">Enter Product Code:</label>
+    <input type="text" id="productCode">
 
-    <br><br>
+    <button onclick="validateCode()">Validate</button>
 
-    <label>Email:</label>
-    <input type="email" id="email">
-
-    <br><br>
-
-    <label>Age:</label>
-    <input type="number" id="age">
-
-    <br><br>
-
-    <label>Height:</label>
-    <input type="number" id="height">
-
-    <br><br>
-
-    <label>Weight:</label>
-    <input type="number" id="weight">
-
-    <br><br>
-
-    <button onclick="addCustomer()">Submit</button>
-
-    <h2>Customer Details</h2>
-
-    <div id="customerTable"></div>
+    <p id="result"></p>
 
     <script src="script.js"></script>
 
