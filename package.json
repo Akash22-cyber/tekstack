@@ -1,0 +1,23 @@
+{
+  "name": "teksec",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Akash22-cyber/tekstack.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Akash22-cyber/tekstack/issues"
+  },
+  "homepage": "https://github.com/Akash22-cyber/tekstack#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
