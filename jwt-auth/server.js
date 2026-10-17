@@ -51,15 +51,15 @@ const MOVIES = [
 function verifyToken(req, res, next) {
   const authHeader = req.headers["authorization"];
 
-  // Check if Authorization header is present
+  // Check if Authorization header is present — 401 Unauthorized (no credentials provided)
   if (!authHeader) {
-    return res.status(403).json({ message: "Invalid token" });
+    return res.status(401).json({ message: "Access denied. No token provided." });
   }
 
-  // Expect format: "Bearer <token>"
+  // Expect format: "Bearer <token>" — 401 for malformed/missing credentials
   const parts = authHeader.split(" ");
   if (parts.length !== 2 || parts[0] !== "Bearer") {
-    return res.status(403).json({ message: "Invalid token" });
+    return res.status(401).json({ message: "Invalid token format. Use: Bearer <token>" });
   }
 
   const token = parts[1];
@@ -67,11 +67,12 @@ function verifyToken(req, res, next) {
   // Verify the token signature and expiry
   jwt.verify(token, JWT_SECRET, (err, decoded) => {
     if (err) {
-      // Token is expired or tampered with
+      // Expired token — 401: credentials exist but are no longer valid
       if (err.name === "TokenExpiredError") {
-        return res.status(403).json({ message: "Token expired" });
+        return res.status(401).json({ message: "Token expired. Please log in again." });
       }
-      return res.status(403).json({ message: "Invalid token" });
+      // Tampered / invalid signature — 401: credentials are unrecognized
+      return res.status(401).json({ message: "Invalid token" });
     }
 
     // Attach decoded user info to the request
