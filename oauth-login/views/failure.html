@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Authentication Failed | SecureAuth</title>
+  <meta name="description" content="Google OAuth authentication failed. Please try signing in again." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-dark:  #07080f;
+      --bg-card:  rgba(255,255,255,0.04);
+      --border:   rgba(255,255,255,0.09);
+      --danger:   #ef4444;
+      --danger-2: #dc2626;
+      --text-pri: #f1f1f3;
+      --text-sec: #9ca3af;
+    }
+
+    html, body { height: 100%; font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(--text-pri); overflow: hidden; }
+
+    .bg-layer {
+      position: fixed; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 75% 60% at 30% 20%, rgba(239,68,68,.18) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 50% at 75% 80%, rgba(220,38,38,.15) 0%, transparent 50%);
+    }
+
+    .orb { position: fixed; border-radius: 50%; filter: blur(80px); opacity: .45; pointer-events: none; z-index: 0; animation: drift 14s ease-in-out infinite alternate; }
+    .orb-1 { width: 400px; height: 400px; background: rgba(239,68,68,.35); top:-100px; left:-80px; }
+    .orb-2 { width: 300px; height: 300px; background: rgba(220,38,38,.25); bottom:-60px; right:-60px; animation-delay:-6s; }
+
+    .grid-overlay {
+      position: fixed; inset: 0; z-index: 0; opacity: .14;
+      background-image: linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px), linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px);
+      background-size: 48px 48px;
+    }
+
+    @keyframes drift { 0%{transform:translate(0,0);} 100%{transform:translate(25px,20px);} }
+
+    .page { position: relative; z-index: 1; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+
+    .card {
+      background: var(--bg-card);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(239,68,68,.2);
+      border-radius: 24px; padding: 3rem 2.75rem; max-width: 460px; width: 100%;
+      box-shadow: 0 0 60px rgba(239,68,68,.1), 0 32px 64px rgba(0,0,0,.5);
+      animation: slideUp .6s cubic-bezier(.16,1,.3,1) both;
+    }
+
+    @keyframes slideUp { from{opacity:0;transform:translateY(28px);} to{opacity:1;transform:translateY(0);} }
+
+    /* Error icon */
+    .error-icon-wrap {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: rgba(239,68,68,.12);
+      border: 2px solid rgba(239,68,68,.3);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.75rem;
+      animation: shake .5s cubic-bezier(.36,.07,.19,.97) .3s both;
+    }
+
+    @keyframes shake {
+      10%,90%  { transform: translateX(-2px); }
+      20%,80%  { transform: translateX(4px); }
+      30%,50%,70% { transform: translateX(-6px); }
+      40%,60%  { transform: translateX(6px); }
+    }
+
+    .error-icon { font-size: 2.2rem; }
+
+    /* Text */
+    .error-code {
+      text-align: center; font-size: .75rem; font-weight: 600;
+      color: #fca5a5; letter-spacing: .1em; text-transform: uppercase;
+      margin-bottom: .6rem;
+    }
+
+    .error-title {
+      text-align: center; font-size: 1.9rem; font-weight: 800;
+      letter-spacing: -.035em; line-height: 1.15; margin-bottom: .9rem;
+      background: linear-gradient(135deg, #ffffff 40%, #fca5a5 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .error-msg {
+      text-align: center; font-size: .92rem; color: var(--text-sec); line-height: 1.65; margin-bottom: 2rem;
+    }
+
+    /* Reasons list */
+    .reasons {
+      background: rgba(239,68,68,.06); border: 1px solid rgba(239,68,68,.15);
+      border-radius: 14px; padding: 1.2rem 1.4rem; margin-bottom: 2rem;
+    }
+
+    .reasons-title { font-size: .78rem; font-weight: 600; color: #fca5a5; text-transform: uppercase; letter-spacing: .07em; margin-bottom: .75rem; }
+
+    .reason-item {
+      display: flex; align-items: flex-start; gap: .6rem;
+      font-size: .85rem; color: var(--text-sec); margin-bottom: .55rem; line-height: 1.45;
+    }
+    .reason-item:last-child { margin-bottom: 0; }
+    .reason-dot { width: 5px; height: 5px; border-radius: 50%; background: #ef4444; flex-shrink: 0; margin-top: .45rem; }
+
+    /* Buttons */
+    .btn-primary {
+      display: flex; align-items: center; justify-content: center; gap: .65rem;
+      width: 100%; padding: .9rem 1.5rem;
+      background: linear-gradient(135deg, var(--danger), var(--danger-2));
+      color: #fff; font-family: 'Inter',sans-serif; font-size: .95rem; font-weight: 600;
+      border: none; border-radius: 14px; cursor: pointer; text-decoration: none;
+      transition: all .2s; box-shadow: 0 4px 16px rgba(239,68,68,.3); margin-bottom: .85rem;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(239,68,68,.45); }
+
+    .btn-secondary {
+      display: flex; align-items: center; justify-content: center; gap: .65rem;
+      width: 100%; padding: .85rem 1.5rem;
+      background: var(--bg-card); color: var(--text-sec);
+      font-family: 'Inter',sans-serif; font-size: .9rem; font-weight: 500;
+      border: 1px solid var(--border); border-radius: 14px; cursor: pointer; text-decoration: none;
+      transition: all .2s;
+    }
+    .btn-secondary:hover { border-color: rgba(255,255,255,.2); color: var(--text-pri); transform: translateY(-1px); }
+
+    /* Status bar */
+    .status-bar {
+      margin-top: 2rem; padding-top: 1.4rem; border-top: 1px solid var(--border);
+      display: flex; justify-content: center; align-items: center; gap: .5rem;
+      font-size: .78rem; color: var(--text-sec);
+    }
+
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: #ef4444; }
+  </style>
+</head>
+<body>
+
+  <div class="bg-layer"></div>
+  <div class="grid-overlay"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <main class="page" role="main">
+    <div class="card" role="region" aria-label="Authentication error">
+
+      <!-- Error icon -->
+      <div class="error-icon-wrap" aria-hidden="true">
+        <span class="error-icon">🔒</span>
+      </div>
+
+      <!-- Error text -->
+      <p class="error-code">Authentication Error</p>
+      <h1 class="error-title">Login Failed</h1>
+      <p class="error-msg">
+        We couldn't verify your identity with Google. This may happen for a few reasons — please review the list below and try again.
+      </p>
+
+      <!-- Possible reasons -->
+      <div class="reasons" role="list" aria-label="Possible reasons for failure">
+        <p class="reasons-title">Possible Reasons</p>
+        <div class="reason-item" role="listitem">
+          <span class="reason-dot" aria-hidden="true"></span>
+          You cancelled or closed the Google sign-in window.
+        </div>
+        <div class="reason-item" role="listitem">
+          <span class="reason-dot" aria-hidden="true"></span>
+          The OAuth app credentials are invalid or expired.
+        </div>
+        <div class="reason-item" role="listitem">
+          <span class="reason-dot" aria-hidden="true"></span>
+          The redirect URI is not authorized in Google Cloud Console.
+        </div>
+        <div class="reason-item" role="listitem">
+          <span class="reason-dot" aria-hidden="true"></span>
+          Your account was denied access by the app policy.
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <a id="btn-retry" href="/auth/google" class="btn-primary" aria-label="Try logging in again with Google">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+          <polyline points="23 4 23 10 17 10"/>
+          <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+        </svg>
+        Try Again with Google
+      </a>
+
+      <a id="btn-home" href="/" class="btn-secondary" aria-label="Return to home page">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+        Back to Home
+      </a>
+
+      <!-- Status -->
+      <div class="status-bar" role="status">
+        <div class="status-dot" aria-hidden="true"></div>
+        Authentication service is operational
+      </div>
+
+    </div>
+  </main>
+
+</body>
+</html>
