@@ -53,13 +53,13 @@ function verifyToken(req, res, next) {
 
   // Check if Authorization header is present
   if (!authHeader) {
-    return res.status(403).json({ message: "Invalid token" });
+        return res.status(401).json({ message: "Access denied. No token provided." });
   }
 
   // Expect format: "Bearer <token>"
   const parts = authHeader.split(" ");
   if (parts.length !== 2 || parts[0] !== "Bearer") {
-    return res.status(403).json({ message: "Invalid token" });
+     return res.status(401).json({ message: "Invalid token format. Use: Bearer <token>" });
   }
 
   const token = parts[1];
